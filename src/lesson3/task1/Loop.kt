@@ -11,7 +11,7 @@ import kotlin.math.*
 fun factorial(n: Int): Double {
     var result = 1.0
     for (i in 1..n) {
-        result = result * i // Please do not fix in master
+        result *= i // Please do not fix in master
     }
     return result
 }
@@ -87,7 +87,18 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var a = 1
+    var b = 1
+    var c = 1
+    if (n < 3) return 1
+    for (i in 3..n) {
+        c = a + b
+        a = b
+        b = c
+    }
+    return c
+}
 
 /**
  * Простая
@@ -109,7 +120,16 @@ fun lcm(m: Int, n: Int): Int {
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var j = 0
+    for (i in 2..n) {
+        j = i
+        if (n % i == 0) break
+    }
+    return j
+}
+
+
 
 /**
  * Простая
@@ -131,7 +151,13 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    for (i in 2..min(m, n)) {
+        if ((m % i == 0) && (n % i == 0))
+            return false
+    }
+    return true
+}
 
 /**
  * Простая
@@ -164,7 +190,18 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var count = 0
+    var n = x
+    while (n != 1) {
+        if (n % 2 == 0)
+            n /= 2
+        else
+            n = n * 3 + 1
+        count++
+    }
+    return count
+}
 
 /**
  * Средняя
@@ -219,7 +256,16 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean {
+    var num = digitNumber(n)
+    var back = num
+    for (i in 1..(num / 2 + 1)) {
+        if ((n / vstepen(10, i - 1)) % 10 != (n / vstepen(10, back - 1)) % 10)
+            return false
+        back--
+    }
+    return true
+}
 
 /**
  * Средняя

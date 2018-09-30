@@ -165,8 +165,7 @@ class Tests {
         assertEquals(6, collatzSteps(64))
         assertEquals(25, collatzSteps(100))
         assertEquals(7, collatzSteps(128))
-        assertEquals(111, collatzSteps(1000))
-        assertEquals(128, collatzSteps(100000))
+        assertEquals(111, collatzSteps(27))
     }
 
     @Test
