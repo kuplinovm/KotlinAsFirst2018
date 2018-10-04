@@ -67,18 +67,16 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var m = n
-    var j = 0
+    var m = abs(n)
+    var j = 1
     if (m < 10) return 1
     else {
-        for (i in 1..Int.MAX_VALUE) {
-            j = i
+        while (m >= 10) {
+            j++
             m /= 10
-            if (m < 10) j++
-            if (m < 10) break
         }
     }
-    return j
+    return j++
 }
 
 /**
@@ -108,7 +106,7 @@ fun fib(n: Int): Int {
  */
 fun lcm(m: Int, n: Int): Int {
     var j = 0
-    for (i in max(m, n)..Int.MAX_VALUE) {
+    for (i in max(m, n)..Int.MAX_VALUE step max(m, n)) {
         j = i
         if (i % m == 0 && i % n == 0) break
     }
@@ -228,7 +226,7 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun vstepen(n: Int, i: Int): Int {
+fun pow(n: Int, i: Int): Int {
     var m = 1
     for (j in 1..i) {
         m *= n
@@ -241,7 +239,7 @@ fun revert(n: Int): Int {
     var cba = 0
     val num = digitNumber(n)
     for (i in num downTo 1) {
-        cba += (m % 10) * vstepen(10, (i - 1))
+        cba += (m % 10) * pow(10, (i - 1))
         m /= 10
     }
     return cba
@@ -260,7 +258,7 @@ fun isPalindrome(n: Int): Boolean {
     var num = digitNumber(n)
     var back = num
     for (i in 1..(num / 2 + 1)) {
-        if ((n / vstepen(10, i - 1)) % 10 != (n / vstepen(10, back - 1)) % 10)
+        if ((n / pow(10, i - 1)) % 10 != (n / pow(10, back - 1)) % 10)
             return false
         back--
     }

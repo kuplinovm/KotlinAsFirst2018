@@ -27,7 +27,7 @@ class Tests {
     fun queenThreatens() {
         assertTrue(queenThreatens(3, 6, 7, 6))
         assertTrue(queenThreatens(8, 1, 1, 8))
-        assertFalse(queenThreatens(7, 6, 5, 7))
+        assertTrue(queenThreatens(8, 2, 7, 3))
     }
 
     @Test
