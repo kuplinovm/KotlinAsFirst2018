@@ -76,7 +76,7 @@ fun digitNumber(n: Int): Int {
             m /= 10
         }
     }
-    return j++
+    return j
 }
 
 /**
@@ -208,7 +208,20 @@ fun collatzSteps(x: Int): Int {
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    val xx = x % (2 * PI)
+    var res = xx
+    var m = xx
+    var ind = 1.0
+    while (true) {
+        m = -m * xx * xx / (ind + 1) / (ind + 2)
+        if (abs(m) < eps)
+            break
+        res += m
+        ind += 2
+    }
+    return res
+}
 
 /**
  * Средняя
@@ -217,7 +230,20 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * cos(x) = 1 - x^2 / 2! + x^4 / 4! - x^6 / 6! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    val xx = x % (2 * PI)
+    var res = 1.0
+    var m = 1.0
+    var ind = 0.0
+    while (true) {
+        m = -m * xx * xx / (ind + 1) / (ind + 2)
+        if (abs(m) < eps)
+            break
+        res += m
+        ind += 2
+    }
+    return res
+}
 
 /**
  * Средняя
@@ -239,7 +265,7 @@ fun revert(n: Int): Int {
     var cba = 0
     val num = digitNumber(n)
     for (i in num downTo 1) {
-        cba += (m % 10) * pow(10, (i - 1))
+        cba = cba * 10 + m % 10
         m /= 10
     }
     return cba
@@ -255,7 +281,7 @@ fun revert(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun isPalindrome(n: Int): Boolean {
-    var num = digitNumber(n)
+    val num = digitNumber(n)
     var back = num
     for (i in 1..(num / 2 + 1)) {
         if ((n / pow(10, i - 1)) % 10 != (n / pow(10, back - 1)) % 10)
@@ -293,7 +319,30 @@ fun hasDifferentDigits(n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun powdouble(n: Double, i: Double): Double {
+    var m = 1.0
+    if (i == 0.0) return 1.0
+    else {
+        for (j in 1..i.toInt()) {
+            m *= n
+        }
+        return m
+    }
+}
+
+fun digit(n: Int, i: Int): Int = n / powdouble(10.0, i.toDouble()).toInt() % 10
+
+fun squareSequenceDigit(n: Int): Int {
+    var a = 0
+    var number = 1
+    var nn = 0
+    while (a < n) {
+        nn = number * number
+        a += digitNumber(nn)
+        number++
+    }
+    return digit(nn, a - n)
+}
 
 /**
  * Сложная
@@ -304,4 +353,17 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var a = 0
+    var number = 0
+    var n1 = 0
+    var n2 = 1
+    while (a < n) {
+        number = n1 + n2
+        a += digitNumber(number)
+        val b = n1
+        n1 += n2
+        n2 = b
+    }
+    return digit(number, a - n)
+}

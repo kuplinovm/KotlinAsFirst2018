@@ -94,7 +94,16 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *     mapOf("Emergency" to "911", "Police" to "02")
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
-fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> = TODO()
+fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
+    val mapAB = (mapA + mapB).toMutableMap()
+    var list = listOf<String>()
+    list += mapAB.keys
+    for (key in list) {
+        if (mapAB.containsKey(key) == mapA.containsKey(key) && mapAB[key] != mapA[key])
+            mapAB[key] = mapA[key] + ", " + mapAB[key]
+    }
+    return mapAB
+}
 
 /**
  * Простая

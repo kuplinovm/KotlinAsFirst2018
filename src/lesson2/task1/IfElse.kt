@@ -121,9 +121,12 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int = when {
-    kingX != rookX && kingY != rookY && kingX + kingY != bishopX + bishopY && abs(kingX - kingY) != abs(bishopX - bishopY) -> 0
-    (kingX == rookX || kingY == rookY) && kingX + kingY != bishopX + bishopY && abs(kingX - kingY) != abs(bishopX - bishopY) -> 1
-    kingX != rookX && kingY != rookY && (kingX + kingY == bishopX + bishopY || abs(kingX - kingY) == abs(bishopX - bishopY)) -> 2
+    kingX != rookX && kingY != rookY && kingX + kingY != bishopX + bishopY &&
+            abs(kingX - kingY) != abs(bishopX - bishopY) -> 0
+    (kingX == rookX || kingY == rookY) && kingX + kingY != bishopX + bishopY &&
+            abs(kingX - kingY) != abs(bishopX - bishopY) -> 1
+    kingX != rookX && kingY != rookY && (kingX + kingY == bishopX + bishopY ||
+            abs(kingX - kingY) == abs(bishopX - bishopY)) -> 2
     else -> 3
 }
 
@@ -139,7 +142,7 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
 fun triangleKind(a: Double, b: Double, c: Double): Int = when {
     sqr(c) == sqr(a) + sqr(b) || sqr(a) == sqr(c) + sqr(b) || sqr(b) == sqr(a) + sqr(c) -> 1
     sqr(c) < sqr(a) + sqr(b) && sqr(a) < sqr(c) + sqr(b) && sqr(b) < sqr(a) + sqr(c) -> 0
-    a + b < c || a + c < b || c + b < a -> -1
+    minOf(b, c) + minOf(a, b) < maxOf(a, b, c) -> -1
     else -> 2
 }
 
