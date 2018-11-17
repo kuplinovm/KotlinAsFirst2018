@@ -142,7 +142,7 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
 fun triangleKind(a: Double, b: Double, c: Double): Int = when {
     sqr(c) == sqr(a) + sqr(b) || sqr(a) == sqr(c) + sqr(b) || sqr(b) == sqr(a) + sqr(c) -> 1
     sqr(c) < sqr(a) + sqr(b) && sqr(a) < sqr(c) + sqr(b) && sqr(b) < sqr(a) + sqr(c) -> 0
-    minOf(b, c) + minOf(a, b) < maxOf(a, b, c) -> -1
+    minOf(a, b, c) + maxOf(minOf(a, b), minOf(a, c), minOf(b, c)) < maxOf(a, b, c) -> -1
     else -> 2
 }
 

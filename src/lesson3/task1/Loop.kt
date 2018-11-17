@@ -330,7 +330,7 @@ fun powdouble(n: Double, i: Double): Double {
     }
 }
 
-fun digit(n: Int, i: Int): Int = n / powdouble(10.0, i.toDouble()).toInt() % 10
+fun digit(n: Int, i: Int): Int = n / 10.0.pow(i.toDouble()).toInt() % 10
 
 fun squareSequenceDigit(n: Int): Int {
     var a = 0

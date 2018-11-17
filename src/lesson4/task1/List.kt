@@ -4,7 +4,11 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson3.task1.digitNumber
+import lesson3.task1.minDivisor
+import java.lang.StringBuilder
+import kotlin.math.pow
 import kotlin.math.sqrt
+import powint
 
 /**
  * Пример
@@ -118,12 +122,9 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  */
 fun abs(v: List<Double>): Double {
     var sum = 0.0
-    if (v.isEmpty()) return 0.0
-    else
-        for (i in 0 until v.size) {
-            val element = v[i]
-            sum += element * element
-        }
+    for (element in v) {
+        sum += element * element
+    }
     return sqrt(sum)
 }
 
@@ -154,11 +155,9 @@ fun mean(list: List<Double>): Double {
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
     val mean = mean(list)
-    if (list.size == 0) return list
-    else
-        for (i in 0 until list.size) {
-            list[i] -= mean
-        }
+    for (i in 0 until list.size) {
+        list[i] -= mean
+    }
     return list
 }
 
@@ -189,24 +188,13 @@ fun times(a: List<Double>, b: List<Double>): Double {
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0.0 при любом x.
  */
-fun pow(n: Double, i: Int): Double {
-    var m = 1.0
-    if (i == 0) return 1.0
-    else {
-        for (j in 1..i) {
-            m *= n
-        }
-        return m
-    }
-}
-
 fun polynom(p: List<Double>, x: Double): Double {
     if (p.isEmpty()) return 0.0
     else {
         var polynom = p[0]
         for (i in 1 until p.size) {
             val element = p[i]
-            polynom += element * pow(x, i)
+            polynom += element * x.pow(i)
         }
         return polynom
     }
@@ -224,10 +212,8 @@ fun polynom(p: List<Double>, x: Double): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Double>): MutableList<Double> {
-    if (list.isEmpty()) return list
-    else
-        for (i in 1 until list.size)
-            list[i] += list[i - 1]
+    for (i in 1 until list.size)
+        list[i] += list[i - 1]
     return list
 }
 
@@ -238,20 +224,12 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun minDivisor(n: Int): Int {
-    var j = 0
-    for (i in 2..n) {
-        j = i
-        if (n % i == 0) break
-    }
-    return j
-}
 
 fun factorize(n: Int): List<Int> {
-    var list = listOf<Int>()
+    val list = mutableListOf<Int>()
     var m = n
     while (m > 1) {
-        list += minDivisor(m)
+        list.add(minDivisor(m))
         m /= minDivisor(m)
     }
     return list
@@ -300,55 +278,22 @@ fun convert(n: Int, base: Int): List<Int> {
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-fun numbertranslate(n: Int): String = when (n) {
-    0 -> "0"
-    1 -> "1"
-    2 -> "2"
-    3 -> "3"
-    4 -> "4"
-    5 -> "5"
-    6 -> "6"
-    7 -> "7"
-    8 -> "8"
-    9 -> "9"
-    10 -> "a"
-    11 -> "b"
-    12 -> "c"
-    13 -> "d"
-    14 -> "e"
-    15 -> "f"
-    16 -> "g"
-    17 -> "h"
-    18 -> "i"
-    19 -> "j"
-    20 -> "k"
-    21 -> "l"
-    22 -> "m"
-    23 -> "n"
-    24 -> "o"
-    25 -> "p"
-    26 -> "q"
-    27 -> "r"
-    28 -> "s"
-    29 -> "t"
-    30 -> "u"
-    31 -> "v"
-    32 -> "w"
-    33 -> "x"
-    34 -> "y"
-    35 -> "z"
-    else -> "error"
+fun numberTranslate(n: Int): String {
+    if (n < 10)
+        return n.toString()
+    else
+        return (n + 87).toChar().toString()
 }
 
 fun convertToString(n: Int, base: Int): String {
-    var str = ""
+    val sb = StringBuilder()
     var m = n
     while (m >= base) {
-        str += numbertranslate(m % base)
+        sb.append(numberTranslate(m % base))
         m /= base
     }
-    str += numbertranslate(m)
-    return str.reversed()
+    sb.append(numberTranslate(m))
+    return sb.toString().reversed()
 }
 
 /**
@@ -358,17 +303,6 @@ fun convertToString(n: Int, base: Int): String {
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun powint(n: Int, i: Int): Int {
-    var m = 1
-    if (i == 0) return 1
-    else {
-        for (j in 1..i) {
-            m *= n
-        }
-        return m
-    }
-}
-
 fun decimal(digits: List<Int>, base: Int): Int {
     var number = 0
     for (i in 0..(digits.size - 1)) {
@@ -504,46 +438,46 @@ fun decimalFromString(str: String, base: Int): Int {
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
-    var str = ""
-    when (n / 1000){
-        1 -> str += "M"
-        2 -> str += "MM"
-        3 -> str += "MMM"
+    val str = StringBuilder()
+    when (n / 1000) {
+        1 -> str.append("M")
+        2 -> str.append("MM")
+        3 -> str.append("MMM")
     }
     when (n / 100 % 10) {
-        1 -> str += "C"
-        2 -> str += "CC"
-        3 -> str += "CCC"
-        4 -> str += "CD"
-        5 -> str += "D"
-        6 -> str += "DC"
-        7 -> str += "DCC"
-        8 -> str += "DCCC"
-        9 -> str += "CM"
+        1 -> str.append("C")
+        2 -> str.append("CC")
+        3 -> str.append("CCC")
+        4 -> str.append("CD")
+        5 -> str.append("D")
+        6 -> str.append("DC")
+        7 -> str.append("DCC")
+        8 -> str.append("DCCC")
+        9 -> str.append("CM")
     }
     when (n / 10 % 10) {
-        1 -> str += "X"
-        2 -> str += "XX"
-        3 -> str += "XXX"
-        4 -> str += "XL"
-        5 -> str += "L"
-        6 -> str += "LX"
-        7 -> str += "LXX"
-        8 -> str += "LXXX"
-        9 -> str += "XC"
+        1 -> str.append("X")
+        2 -> str.append("XX")
+        3 -> str.append("XXX")
+        4 -> str.append("XL")
+        5 -> str.append("L")
+        6 -> str.append("LX")
+        7 -> str.append("LXX")
+        8 -> str.append("LXXX")
+        9 -> str.append("XC")
     }
     when (n % 10) {
-        1 -> str += "I"
-        2 -> str += "II"
-        3 -> str += "III"
-        4 -> str += "IV"
-        5 -> str += "V"
-        6 -> str += "VI"
-        7 -> str += "VII"
-        8 -> str += "VIII"
-        9 -> str += "IX"
+        1 -> str.append("I")
+        2 -> str.append("II")
+        3 -> str.append("III")
+        4 -> str.append("IV")
+        5 -> str.append("V")
+        6 -> str.append("VI")
+        7 -> str.append("VII")
+        8 -> str.append("VIII")
+        9 -> str.append("IX")
     }
-    return str
+    return str.toString()
 }
 
 /**
