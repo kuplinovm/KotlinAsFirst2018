@@ -3,6 +3,7 @@
 package lesson6.task1
 
 
+import lesson2.task2.daysInMonth
 import java.lang.StringBuilder
 import kotlin.Exception
 
@@ -76,10 +77,11 @@ fun main(args: Array<String>) {
 fun dateStrToDigit(str: String): String {
     try {
         val parts = str.split(" ")
-        val day = parts[1].toInt()
+        if (parts.size > 3) throw Exception()
+        val day = parts[0].toInt()
         val month: Int
-        val year = parts[3].toInt()
-        month = when (parts[2]) {
+        val year = parts[2].toInt()
+        month = when (parts[1]) {
             "января" -> 1
             "февраля" -> 2
             "марта" -> 3
@@ -92,8 +94,9 @@ fun dateStrToDigit(str: String): String {
             "октября" -> 10
             "ноября" -> 11
             "декабря" -> 12
-            else -> throw IllegalArgumentException()
+            else -> throw Exception()
         }
+        if (day !in 1..daysInMonth(month, year)) throw Exception()
         return String.format("%02d.%02d.%d", day, month, year)
     } catch (e: Exception) {
         return ""
@@ -113,15 +116,16 @@ fun dateStrToDigit(str: String): String {
 fun dateDigitToStr(digital: String): String {
     try {
         val parts = digital.split(".")
-        val day = parts[1].toInt()
+        if (parts.size > 3) throw Exception()
+        val day = parts[0].toInt()
         val month = StringBuilder()
-        val year = parts[3].toInt()
-        when (parts[2].toInt()) {
+        val year = parts[2].toInt()
+        when (parts[1].toInt()) {
             1 -> month.append("января")
             2 -> month.append("февраля")
             3 -> month.append("марта")
-            5 -> month.append("апреля")
-            4 -> month.append("мая")
+            4 -> month.append("апреля")
+            5 -> month.append("мая")
             6 -> month.append("июня")
             7 -> month.append("июля")
             8 -> month.append("августа")
@@ -129,8 +133,9 @@ fun dateDigitToStr(digital: String): String {
             10 -> month.append("октября")
             11 -> month.append("ноября")
             12 -> month.append("декабря")
-            else -> throw IllegalArgumentException()
+            else -> throw Exception()
         }
+        if (day !in 1..daysInMonth(parts[1].toInt(), year)) throw Exception()
         return "$day $month $year"
     } catch (e: Exception) {
         return ""
@@ -149,8 +154,16 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
-//(phone.toSet().toList().filter { it != '-' || it != '(' || it != ')' || it != ' ' }).toString()
+fun flattenPhoneNumber(phone: String): String = TODO() /*{
+    return try {
+        val res = phone.filter { it != '-' && it != '(' && it != ')' && it != ' ' }
+        if (res.all { it.toInt() !in 0..9 && it != '+' }) throw Exception()
+        res
+
+    } catch (e: Exception) {
+        ""
+    }
+}*/
 
 /**
  * Средняя
