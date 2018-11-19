@@ -129,6 +129,7 @@ fun dateDigitToStr(digital: String): String {
             10 -> month.append("октября")
             11 -> month.append("ноября")
             12 -> month.append("декабря")
+            else -> throw IllegalArgumentException()
         }
         return "$day $month $year"
     } catch (e: Exception) {
@@ -149,7 +150,7 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String = TODO()
-        //(phone.toSet().toList().filter { it != '-' || it != '(' || it != ')' || it != ' ' }).toString()
+//(phone.toSet().toList().filter { it != '-' || it != '(' || it != ')' || it != ' ' }).toString()
 
 /**
  * Средняя
