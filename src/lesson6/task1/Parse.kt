@@ -2,6 +2,10 @@
 
 package lesson6.task1
 
+
+import java.lang.StringBuilder
+import kotlin.Exception
+
 /**
  * Пример
  *
@@ -69,7 +73,32 @@ fun main(args: Array<String>) {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    try {
+        val parts = str.split(" ")
+        val day = parts[1].toInt()
+        val month: Int
+        val year = parts[3].toInt()
+        month = when (parts[2]) {
+            "января" -> 1
+            "февраля" -> 2
+            "марта" -> 3
+            "апреля" -> 4
+            "мая" -> 5
+            "июня" -> 6
+            "июля" -> 7
+            "августа" -> 8
+            "сентября" -> 9
+            "октября" -> 10
+            "ноября" -> 11
+            "декабря" -> 12
+            else -> throw IllegalArgumentException()
+        }
+        return String.format("%02d.%02d.%d", day, month, year)
+    } catch (e: Exception) {
+        return ""
+    }
+}
 
 /**
  * Средняя
@@ -81,7 +110,31 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    try {
+        val parts = digital.split(".")
+        val day = parts[1].toInt()
+        val month = StringBuilder()
+        val year = parts[3].toInt()
+        when (parts[2].toInt()) {
+            1 -> month.append("января")
+            2 -> month.append("февраля")
+            3 -> month.append("марта")
+            5 -> month.append("апреля")
+            4 -> month.append("мая")
+            6 -> month.append("июня")
+            7 -> month.append("июля")
+            8 -> month.append("августа")
+            9 -> month.append("сентября")
+            10 -> month.append("октября")
+            11 -> month.append("ноября")
+            12 -> month.append("декабря")
+        }
+        return "$day $month $year"
+    } catch (e: Exception) {
+        return ""
+    }
+}
 
 /**
  * Средняя
@@ -96,6 +149,7 @@ fun dateDigitToStr(digital: String): String = TODO()
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String = TODO()
+        //(phone.toSet().toList().filter { it != '-' || it != '(' || it != ')' || it != ' ' }).toString()
 
 /**
  * Средняя
