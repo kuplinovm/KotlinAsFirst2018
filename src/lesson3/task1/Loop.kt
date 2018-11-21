@@ -1,6 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson3.task1
 
+import powint
 import kotlin.math.*
 
 /**
@@ -134,13 +135,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var max = 1
-    for (i in 1..n) {
-        if (n % i == 0 && i < n) max = i
-    }
-    return max
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая
@@ -252,14 +247,6 @@ fun cos(x: Double, eps: Double): Double {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun pow(n: Int, i: Int): Int {
-    var m = 1
-    for (j in 1..i) {
-        m *= n
-    }
-    return m
-}
-
 fun revert(n: Int): Int {
     var m = n
     var cba = 0
@@ -280,16 +267,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean {
-    val num = digitNumber(n)
-    var back = num
-    for (i in 1..(num / 2 + 1)) {
-        if ((n / pow(10, i - 1)) % 10 != (n / pow(10, back - 1)) % 10)
-            return false
-        back--
-    }
-    return true
-}
+fun isPalindrome(n: Int): Boolean = revert(n) == n
 
 /**
  * Средняя
@@ -319,16 +297,6 @@ fun hasDifferentDigits(n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun powdouble(n: Double, i: Double): Double {
-    var m = 1.0
-    if (i == 0.0) return 1.0
-    else {
-        for (j in 1..i.toInt()) {
-            m *= n
-        }
-        return m
-    }
-}
 
 fun digit(n: Int, i: Int): Int = n / 10.0.pow(i.toDouble()).toInt() % 10
 

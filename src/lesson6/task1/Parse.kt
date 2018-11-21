@@ -154,16 +154,18 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO() /*{
+fun flattenPhoneNumber(phone: String): String {
     return try {
+        if (phone.toSet().contains('+') && phone.toSet().first() != '+') throw Exception()
         val res = phone.filter { it != '-' && it != '(' && it != ')' && it != ' ' }
-        if (res.all { it.toInt() !in 0..9 && it != '+' }) throw Exception()
+        if (!(res.all { it == '0' || it == '1' || it == '2' || it == '3' || it == '4' ||
+                            it == '5' || it == '6' || it == '7' || it == '8' || it == '9' || it == '+' }))
+            throw Exception()
         res
-
     } catch (e: Exception) {
         ""
     }
-}*/
+}
 
 /**
  * Средняя
@@ -187,7 +189,33 @@ fun bestLongJump(jumps: String): Int = TODO()
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    return try {
+        if (!(jumps.toSet().all {
+                    it == '0' || it == '1' || it == '2' || it == '3' || it == '4' ||
+                            it == '5' || it == '6' || it == '7' || it == '8' || it == '9' ||
+                            it == ' ' || it == '+' || it == '%' || it == '-'
+                }))
+            throw Exception()
+
+        val list = jumps.split(" ")
+        var max = -1
+
+        for (i in 0 until list.size step 2) {
+            if (!(list[i].toSet().all {
+                        it == '0' || it == '1' || it == '2' || it == '3' || it == '4' ||
+                                it == '5' || it == '6' || it == '7' || it == '8' || it == '9'
+                    }) && !(list[i + 1].toSet().all { it == '+' || it == '%' || it == '-' }))
+                throw Exception()
+        }
+
+        for (i in 0 until list.size step 2)
+            if (list[i].toInt() > max && list[i + 1].toSet().contains('+')) max = list[i].toInt()
+        max
+    } catch (e: Exception) {
+        -1
+    }
+}
 
 /**
  * Сложная

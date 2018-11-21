@@ -9,6 +9,7 @@ import java.lang.StringBuilder
 import kotlin.math.pow
 import kotlin.math.sqrt
 import powint
+import sum
 
 /**
  * Пример
@@ -133,16 +134,7 @@ fun abs(v: List<Double>): Double {
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double {
-    var sum = 0.0
-    if (list.isEmpty()) return 0.0
-    else
-        for (i in 0 until list.size) {
-            val element = list[i]
-            sum += element
-        }
-    return (sum / list.size)
-}
+fun mean(list: List<Double>): Double = if (list.isEmpty()) 0.0 else sum(list) / list.size
 
 
 /**
@@ -189,7 +181,7 @@ fun times(a: List<Double>, b: List<Double>): Double {
  * Значение пустого многочлена равно 0.0 при любом x.
  */
 fun polynom(p: List<Double>, x: Double): Double {
-    if (p.isEmpty()) return 0.0
+    return if (p.isEmpty()) 0.0
     else {
         var polynom = p[0]
         for (i in 1 until p.size) {
@@ -279,10 +271,10 @@ fun convert(n: Int, base: Int): List<Int> {
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
 fun numberTranslate(n: Int): String {
-    if (n < 10)
-        return n.toString()
+    return if (n < 10)
+        n.toString()
     else
-        return (n + 87).toChar().toString()
+        (n + 87).toChar().toString()
 }
 
 fun convertToString(n: Int, base: Int): String {
