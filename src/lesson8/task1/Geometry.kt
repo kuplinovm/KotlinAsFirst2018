@@ -179,7 +179,7 @@ fun lineByPoints(a: Point, b: Point): Line = Line(a, (atan((a.y - b.y) / (a.x - 
  */
 fun bisectorByPoints(a: Point, b: Point): Line =
         Line(Point((a.x + b.x) / 2, (a.y + b.y) / 2),
-        ((atan((a.y - b.y) / (a.x - b.x)) + 2 * PI) % PI + PI / 2) % PI)
+                ((atan((a.y - b.y) / (a.x - b.x)) + 2 * PI) % PI + PI / 2) % PI)
 
 /**
  * Средняя
