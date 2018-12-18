@@ -108,8 +108,8 @@ fun diameter(vararg points: Point): Segment {
     var max = 0.0
     var res = Segment(Point(0.0, 0.0), Point(0.0, 0.0))
 
-    for (point1 in points.drop(points.lastIndex))
-        for (point2 in points.drop(0))
+    for (point1 in points)
+        for (point2 in points)
             if (point1.distance(point2) > max) {
                 max = point1.distance(point2)
                 res = Segment(point1, point2)
