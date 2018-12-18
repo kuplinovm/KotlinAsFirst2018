@@ -170,13 +170,7 @@ fun lineBySegment(s: Segment): Line = lineByPoints(s.begin, s.end)
  *
  * Построить прямую по двум точкам
  */
-fun lineByPoints(a: Point, b: Point): Line =
-        if (asin(Point(b.x, a.y).distance(b) / a.distance(b)) == PI) Line(a, 0.0)
-        else if ((a.x > b.x) && (a.y < b.y) || (a.x < b.x) && (a.y > b.y))
-            Line(a, PI - asin(Point(b.x, a.y).distance(b) / a.distance(b)))
-        else
-            Line(a, asin(Point(b.x, a.y).distance(b) / a.distance(b)))
-
+fun lineByPoints(a: Point, b: Point): Line = Line(a, (atan((a.y - b.y) / (a.x - b.x)) + 2 * PI) % PI)
 
 /**
  * Сложная
@@ -184,12 +178,8 @@ fun lineByPoints(a: Point, b: Point): Line =
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
 fun bisectorByPoints(a: Point, b: Point): Line =
-        if (asin(Point(b.x, a.y).distance(b) / a.distance(b)) >= PI / 2)
-            Line(Point((a.x + b.x) / 2, (a.y + b.y) / 2),
-                    asin(Point(b.x, a.y).distance(b) / a.distance(b)) - PI / 2)
-        else
-            Line(Point((a.x + b.x) / 2, (a.y + b.y) / 2),
-                    asin(Point(b.x, a.y).distance(b) / a.distance(b)) + PI / 2)
+        Line(Point((a.x + b.x) / 2, (a.y + b.y) / 2),
+        ((atan((a.y - b.y) / (a.x - b.x)) + 2 * PI) % PI + PI / 2) % PI)
 
 /**
  * Средняя
