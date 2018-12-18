@@ -3,6 +3,7 @@
 package lesson7.task1
 
 import java.io.File
+import java.lang.StringBuilder
 
 /**
  * Пример
@@ -32,8 +33,7 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
                 if (word.length + currentLineLength >= lineLength) {
                     outputStream.newLine()
                     currentLineLength = 0
-                }
-                else {
+                } else {
                     outputStream.write(" ")
                     currentLineLength++
                 }
@@ -54,7 +54,22 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+    val res = mutableMapOf<String, Int>()
+    val text = StringBuilder()
+
+    for (str in File(inputName).readLines())
+        text.append(str.toLowerCase())
+
+    for (str in substrings) {
+        var n = 0
+        for (i in 0 until text.length)
+            if (text.substring(i, text.length - 1).startsWith(str.toLowerCase()))
+                n++
+        res[str] = n
+    }
+    return res
+}
 
 
 /**

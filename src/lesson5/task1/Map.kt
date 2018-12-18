@@ -98,10 +98,8 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  */
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
     val mapAB = (mapA + mapB).toMutableMap()
-    val list = mutableListOf<String>()
-    list.addAll(mapAB.keys)
-    for (key in list) {
-        if (mapAB.containsKey(key) == mapA.containsKey(key) && mapAB[key] != mapA[key])
+    for (key in mapAB.keys) {
+        if (mapA.containsKey(key) && mapAB[key] != mapA[key])
             mapAB[key] = mapA[key] + ", " + mapAB[key]
     }
     return mapAB
@@ -119,16 +117,12 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val map = mutableMapOf<Int, List<String>>()
-    var keys = listOf<String>()
-    keys += grades.keys
-    for (key in keys) {
-        val list = mutableListOf<String>()
+    for ((key, value) in grades) {
         val i = grades[key]!!
         if (map.containsKey(i))
             map[i] = (map[i]!! + key).sortedDescending()
         else {
-            list.add(key)
-            map.put(i, list)
+            map.put(i, listOf(key))
         }
     }
     return map
@@ -311,10 +305,8 @@ fun hasAnagrams(words: List<String>): Boolean {
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    val list1 = list.toMutableList()
-
-    for (element in list1) {
-        val list2 = list1 - element
+    for (element in list) {
+        val list2 = list - element
         if (number - element in list2)
             return list.indexOf(element) to list2.indexOf(number - element) + 1
     }

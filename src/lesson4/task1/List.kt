@@ -180,17 +180,14 @@ fun times(a: List<Double>, b: List<Double>): Double {
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0.0 при любом x.
  */
-fun polynom(p: List<Double>, x: Double): Double {
-    return if (p.isEmpty()) 0.0
-    else {
-        var polynom = p[0]
-        for (i in 1 until p.size) {
-            val element = p[i]
-            polynom += element * x.pow(i)
-        }
-        return polynom
+fun polynom(p: List<Double>, x: Double): Double = if (p.isEmpty()) 0.0
+else {
+    var polynom = p[0]
+    for (i in 1 until p.size) {
+        val element = p[i]
+        polynom += element * x.pow(i)
     }
-
+    polynom
 }
 
 /**
@@ -270,12 +267,7 @@ fun convert(n: Int, base: Int): List<Int> {
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-fun numberTranslate(n: Int): String {
-    return if (n < 10)
-        n.toString()
-    else
-        (n + 87).toChar().toString()
-}
+fun numberTranslate(n: Int): String = if (n < 10) n.toString() else (n + 87).toChar().toString()
 
 fun convertToString(n: Int, base: Int): String {
     val sb = StringBuilder()
@@ -312,6 +304,8 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: str = "13c", base = 14 -> 250
  */
+fun letterTranslate(l: String): Int = if (l.toInt() < 10) l.toInt() else l.toInt() - 87
+
 
 fun decimalFromString(str: String, base: Int): Int {
     var res = 0

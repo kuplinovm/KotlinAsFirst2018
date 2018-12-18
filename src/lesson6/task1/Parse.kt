@@ -79,9 +79,8 @@ fun dateStrToDigit(str: String): String {
         val parts = str.split(" ")
         if (parts.size > 3) throw Exception()
         val day = parts[0].toInt()
-        val month: Int
         val year = parts[2].toInt()
-        month = when (parts[1]) {
+        val month = when (parts[1]) {
             "января" -> 1
             "февраля" -> 2
             "марта" -> 3
@@ -118,21 +117,20 @@ fun dateDigitToStr(digital: String): String {
         val parts = digital.split(".")
         if (parts.size > 3) throw Exception()
         val day = parts[0].toInt()
-        val month = StringBuilder()
         val year = parts[2].toInt()
-        when (parts[1].toInt()) {
-            1 -> month.append("января")
-            2 -> month.append("февраля")
-            3 -> month.append("марта")
-            4 -> month.append("апреля")
-            5 -> month.append("мая")
-            6 -> month.append("июня")
-            7 -> month.append("июля")
-            8 -> month.append("августа")
-            9 -> month.append("сентября")
-            10 -> month.append("октября")
-            11 -> month.append("ноября")
-            12 -> month.append("декабря")
+        val month = when (parts[1].toInt()) {
+            1 -> "января"
+            2 -> "февраля"
+            3 -> "марта"
+            4 -> "апреля"
+            5 -> "мая"
+            6 -> "июня"
+            7 -> "июля"
+            8 -> "августа"
+            9 -> "сентября"
+            10 -> "октября"
+            11 -> "ноября"
+            12 -> "декабря"
             else -> throw Exception()
         }
         if (day !in 1..daysInMonth(parts[1].toInt(), year)) throw Exception()
@@ -154,18 +152,20 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String {
-    return try {
-        if (phone.toSet().contains('+') && phone.toSet().first() != '+') throw Exception()
-        val res = phone.filter { it != '-' && it != '(' && it != ')' && it != ' ' }
-        if (!(res.all { it == '0' || it == '1' || it == '2' || it == '3' || it == '4' ||
-                            it == '5' || it == '6' || it == '7' || it == '8' || it == '9' || it == '+' }))
-            throw Exception()
-        res
-    } catch (e: Exception) {
-        ""
-    }
-}
+fun flattenPhoneNumber(phone: String): String =
+        try {
+            if (phone.toSet().contains('+') && phone.toSet().first() != '+') throw Exception()
+            val res = phone.filter { it != '-' && it != '(' && it != ')' && it != ' ' }
+            if (!(res.all {
+                        it == '0' || it == '1' || it == '2' || it == '3' || it == '4' ||
+                                it == '5' || it == '6' || it == '7' || it == '8' || it == '9' || it == '+'
+                    }))
+                throw Exception()
+            res
+        } catch (e: Exception) {
+            ""
+        }
+
 
 /**
  * Средняя
@@ -189,33 +189,33 @@ fun bestLongJump(jumps: String): Int = TODO()
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int {
-    return try {
-        if (!(jumps.toSet().all {
-                    it == '0' || it == '1' || it == '2' || it == '3' || it == '4' ||
-                            it == '5' || it == '6' || it == '7' || it == '8' || it == '9' ||
-                            it == ' ' || it == '+' || it == '%' || it == '-'
-                }))
-            throw Exception()
-
-        val list = jumps.split(" ")
-        var max = -1
-
-        for (i in 0 until list.size step 2) {
-            if (!(list[i].toSet().all {
+fun bestHighJump(jumps: String): Int =
+        try {
+            if (!(jumps.toSet().all {
                         it == '0' || it == '1' || it == '2' || it == '3' || it == '4' ||
-                                it == '5' || it == '6' || it == '7' || it == '8' || it == '9'
-                    }) && !(list[i + 1].toSet().all { it == '+' || it == '%' || it == '-' }))
+                                it == '5' || it == '6' || it == '7' || it == '8' || it == '9' ||
+                                it == ' ' || it == '+' || it == '%' || it == '-'
+                    }))
                 throw Exception()
+
+            val list = jumps.split(" ")
+            var max = -1
+
+            for (i in 0 until list.size step 2) {
+                if (!(list[i].toSet().all {
+                            it == '0' || it == '1' || it == '2' || it == '3' || it == '4' ||
+                                    it == '5' || it == '6' || it == '7' || it == '8' || it == '9'
+                        }) && !(list[i + 1].toSet().all { it == '+' || it == '%' || it == '-' }))
+                    throw Exception()
+            }
+
+            for (i in 0 until list.size step 2)
+                if (list[i].toInt() > max && list[i + 1].toSet().contains('+')) max = list[i].toInt()
+            max
+        } catch (e: Exception) {
+            -1
         }
 
-        for (i in 0 until list.size step 2)
-            if (list[i].toInt() > max && list[i + 1].toSet().contains('+')) max = list[i].toInt()
-        max
-    } catch (e: Exception) {
-        -1
-    }
-}
 
 /**
  * Сложная
