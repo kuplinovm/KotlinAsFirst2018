@@ -59,7 +59,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
     val text = StringBuilder()
 
     for (str in File(inputName).readLines())
-        text.append(str.toLowerCase())
+        text.append(str.toLowerCase() + " ")
 
     for (str in substrings) {
         var n = 0
